@@ -23,11 +23,16 @@
 `kubectl get pods -n ingress-nginx`
   
   
-  
+<br />  
+<br />  
+<br />  
 
 
 ---  
   
+<br />  
+<br />  
+<br />  
   
 
 # 💻 캡스톤 디자인  
