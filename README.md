@@ -1,7 +1,6 @@
 # Capstone Design - Hanyang University ERICA
 
 ## 💡 Introduction
----
 1. 컨테이너 클러스터 환경 구성
 	단일노드 minikube로 쿠버네티스 클러스터 구성
 2. 서버리스 구축
@@ -12,16 +11,14 @@
 	OpenFaas 기반 Function 개발하여 서버리스 컴퓨팅 구성
 
 ## ⚙️  Setup
----
 ### DB password
 ### Deployment
-'''shell
+```shell
 kubectl apply -f k8s
-'''
+```
 ### Ingress Nginx Controller
-'''shell
+```shell
 minikube addons enable ingress
 minikube tunnel
 kubectl get pods -n ingress-nginx
-'''
-
+```
