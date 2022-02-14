@@ -1,4 +1,6 @@
 # Capstone Design
+
+
 <br/>
 <br/>
 ## 💡 Introduction
@@ -10,6 +12,8 @@
 	> 공공데이터 API를 활용하여 구성
 4. Function 개발
 	> OpenFaas 기반 Function 개발하여 서버리스 컴퓨팅 구성
+
+
 <br/>
 <br/>
 ## ⚙️  Setup
