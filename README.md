@@ -1,5 +1,7 @@
-# Capstone Design - Hanyang University ERICA
-  
+# Capstone Design
+
+
+
 
 ## 💡 Introduction
 1. 컨테이너 클러스터 환경 구성
@@ -10,13 +12,15 @@
 	> 공공데이터 API를 활용하여 구성
 4. Function 개발
 	> OpenFaas 기반 Function 개발하여 서버리스 컴퓨팅 구성
-  
+
+
+
 
 ## ⚙️  Setup
 ### DB password
 ### Deployment
 `kubectl apply -f k8s`
 ### Ingress Nginx Controller
-`minikube addons enable ingress`
-`minikube tunnel`
+`minikube addons enable ingress`  
+`minikube tunnel`  
 `kubectl get pods -n ingress-nginx`
