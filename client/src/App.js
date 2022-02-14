@@ -9,9 +9,9 @@ function App() {
     <Router>
       <Fragment>
         <header className="header">
-          <div>This is a multicontainer application</div>
+          <div> React Node postgreSQL Connection </div>
           <Link to="/">Home</Link>
-          <Link to="/otherpage">Other page</Link>
+          <Link to="/otherpage">Other page[아무것도 없음 연동 확인용]</Link>
         </header>
         <div className="main">
           <Route exact path="/" component={MainComponent} />

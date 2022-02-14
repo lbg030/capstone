@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 const OtherPage = () => {
   return (
     <div>
-      I'm an other page!
+      아무것도 없음.
       <br />
       <br />
-      <Link to="/">Go back to home screen</Link>
+      <Link to="/">Home</Link>
     </div>
   );
 };
