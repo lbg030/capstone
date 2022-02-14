@@ -21,9 +21,15 @@
 `minikube addons enable ingress`  
 `minikube tunnel`  
 `kubectl get pods -n ingress-nginx`
+  
+  
+  
 
 
----
+---  
+  
+  
+
 # 💻 캡스톤 디자인  
 
 
