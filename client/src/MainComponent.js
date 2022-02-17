@@ -9,15 +9,15 @@ const MainComponent = () => {
   const getAllNumbers = useCallback(async () => {
     // we will use nginx to redirect it to the proper URL
     const data = await axios.get("/api/values/all");
-    setValues(data.data.rows.map(row => row.number));
+    setValues(data.data.rows.map((row) => row.number));
   }, []);
 
   const saveNumber = useCallback(
-    async event => {
+    async (event) => {
       event.preventDefault();
 
       await axios.post("/api/values", {
-        value
+        value,
       });
 
       setValue("");
@@ -36,7 +36,7 @@ const MainComponent = () => {
       <br />
       <span className="title">Values</span>
       <div className="values">
-        {values.map(value => (
+        {values.map((value) => (
           <div className="value">{value}</div>
         ))}
       </div>
@@ -44,7 +44,7 @@ const MainComponent = () => {
         <label>Enter your value: </label>
         <input
           value={value}
-          onChange={event => {
+          onChange={(event) => {
             setValue(event.target.value);
           }}
         />
