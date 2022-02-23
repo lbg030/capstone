@@ -16,13 +16,13 @@ const pgClient = new Pool({
   host: keys.pgHost,
   database: keys.pgDatabase,
   password: keys.pgPassword,
-  port: keys.pgPort
+  port: keys.pgPort,
 });
 
-pgClient.on("connect", client => {
+pgClient.on("connect", (client) => {
   client
     .query("CREATE TABLE IF NOT EXISTS values (number INT)")
-    .catch(err => console.log("PG ERROR", err));
+    .catch((err) => console.log("PG ERROR", err));
 });
 
 //Express route definitions
@@ -38,6 +38,7 @@ app.get("/values/all", async (req, res) => {
 });
 
 // now the post -> insert value
+// insert라서 애초에 DB에 넣어두면 필요없어짐.
 app.post("/values", async (req, res) => {
   if (!req.body.value) res.send({ working: false });
 
@@ -46,6 +47,6 @@ app.post("/values", async (req, res) => {
   res.send({ working: true });
 });
 
-app.listen(5000, err => {
+app.listen(5000, (err) => {
   console.log("Listening");
 });
