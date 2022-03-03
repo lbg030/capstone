@@ -21,31 +21,28 @@ const pgClient = new Pool({
 
 pgClient.on("connect", (client) => {
   client
-    .query("CREATE TABLE IF NOT EXISTS values (number INT)")
+    .query(
+      "CREATE TABLE IF NOT EXISTS values (number INT, longitude INT, latitude INT)"
+    )
     .catch((err) => console.log("PG ERROR", err));
 });
 
-//Express route definitions
 app.get("/", (req, res) => {
   res.send("Hi");
 });
 
-// get the values
-app.get("/values/all", async (req, res) => {
-  const values = await pgClient.query("SELECT * FROM values");
-
-  res.send(values);
+//Express route definitions
+app.get("/values/all", (req, res) => {
+  const values = pgClient.query("SELECT * FROM values", (err, result) => {
+    res.send(result);
+  });
 });
 
-// now the post -> insert value
-// insert라서 애초에 DB에 넣어두면 필요없어짐.
-app.post("/values", async (req, res) => {
-  if (!req.body.value) res.send({ working: false });
-
-  pgClient.query("INSERT INTO values(number) VALUES($1)", [req.body.value]);
-
-  res.send({ working: true });
-});
+// app.get("/api/get", (req, res) => {
+//   const total = pgClient.query("select * from values", (err, result) => {
+//     res.send(result);
+//   });
+// });
 
 app.listen(5000, (err) => {
   console.log("Listening");
