@@ -3,11 +3,7 @@ import React, { useCallback, useState, useEffect } from "react";
 import axios from "axios";
 // import { department } from "./department";
 // import MainComponent from "./MainComponent";
-export default function Map() {
-  useEffect(() => {
-    mapscript();
-  }, []);
-
+const Map = () => {
   const [place, setPlace] = useState([]);
 
   useEffect(() => {
@@ -15,7 +11,7 @@ export default function Map() {
     axios.get("/api/values/all").then((response) => {
       setPlace(response.data.rows);
     });
-  }, [place]);
+  }, []);
 
   // const submitPlace = () => {
   //   axios
@@ -35,7 +31,7 @@ export default function Map() {
     let container = document.getElementById("map");
     let options = {
       center: new kakao.maps.LatLng(37.29742255286631, 126.8355379155881),
-      level: 7,
+      level: 15,
     };
 
     //map
@@ -98,10 +94,16 @@ export default function Map() {
     });
   };
 
+  useEffect(() => {
+    mapscript();
+  }, [place]);
+
   return (
     <>
       <div id="map" style={{ width: "50vw", height: "50vh" }}></div>
       <button onClick={mapscript}>새로 고침</button>
     </>
   );
-}
+};
+
+export default Map;
