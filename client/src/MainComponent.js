@@ -101,7 +101,6 @@ const Map = () => {
   return (
     <>
       <div id="map" style={{ width: "50vw", height: "50vh" }}></div>
-      <button onClick={mapscript}>새로 고침</button>
     </>
   );
 };
