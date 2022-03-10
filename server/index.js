@@ -1,9 +1,11 @@
 const keys = require("./keys");
-
+const convert = require('xml-js');
 // Express Application setup
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const covid_data = require('./utils/covid_data')
+const hospital_data = require('./utils/hospital_data')
 
 const app = express();
 app.use(cors());
@@ -44,6 +46,28 @@ app.post("/values", async (req, res) => {
   pgClient.query("INSERT INTO values(number) VALUES($1)", [req.body.value]);
 
   res.send({ working: true });
+});
+
+app.post('/covid', (req, res)=>{ // 입력 날짜 데이터 가져오기
+  covid_data(req.body.location, (error, {covid_data}={})=>{
+      console.log('입력값:'+req.body.location);
+      if (error){
+          return res.send({error})
+      }
+      return res.send(hospital_data);
+  })
+} )
+
+app.post('/hospital', (req, res)=>{ // 입력 날짜 데이터 가져오기
+  try{
+      hospital_data(req.body.pageNo, (error, {hospital_data}={})=>{
+        console.log(hospital_data[2]['addr']['_text'])
+        return res.json({list : hospital_data});
+    })
+  } catch(err){
+    console.log(err);
+  }
+
 });
 
 app.listen(5000, err => {
