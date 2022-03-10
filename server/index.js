@@ -11,6 +11,27 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
+// postgreSQL Sequelize
+require("./routes/hospital.routes")(app);
+
+const { sequelize, hospital } = require('./models/index.js');
+const models = require('./models');
+const res = require('express/lib/response');
+const router = require('express').Router();
+ 
+const driver = async () => {
+    try {
+        await sequelize.sync();
+    } catch (err) {
+        console.error('초기화 실패');
+        console.error(err);
+        return;
+    }
+ 
+    console.log('초기화 완료.');
+};
+driver();
+
 // Postgres client setup
 const { Pool } = require("pg");
 const pgClient = new Pool({
@@ -27,7 +48,7 @@ pgClient.on("connect", client => {
     .catch(err => console.log("PG ERROR", err));
 });
 
-//Express route definitions
+//Express route ffefinitions
 app.get("/", (req, res) => {
   res.send("Hi");
 });

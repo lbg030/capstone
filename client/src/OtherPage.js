@@ -26,6 +26,7 @@ class OtherPage extends React.Component {
           pageNo: this.state.pageNo		// 현재 시,도이름을 body에 넣는다.
         }
 
+        //http://localhost:5000/hospital
         fetch('http://localhost:5000/hospital',{ // localhost 서버 5000번 포트의 location에게 보낸다.
             method:"post",
             headers: { "Content-Type":  "application/json" },
