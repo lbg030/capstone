@@ -7,6 +7,7 @@ class OtherPage extends React.Component {
     this.state = {
         ID:'',
         pageNo:'',
+        yadmNm:'',
         addr:'',	//주소
         XPosWgs84:'',	//위도
         YPosWgs84:'',	//경도
@@ -40,6 +41,7 @@ class OtherPage extends React.Component {
             console.log(json.list[0].YPosWgs84._text);    //YPosWgs84 경도 콘솔출력
 
             this.setState({
+              yadmNm: json.list[0].yadmNm._text,
               addr: json.list[0].addr._text, // 위에서 만든 state값 초기화
               XPosWgs84: json.list[0].XPosWgs84._text,
               YPosWgs84: json.list[0].YPosWgs84._text,
@@ -56,6 +58,7 @@ class OtherPage extends React.Component {
                     {/* <input placeholder="페이지개수" name="pageNo" onChange={this.onChange}/> */}
                     <button onClick={this.search}>병원데이터 가져오기</button>
                     <h1>예시 데이터</h1>
+                    <h1>이름 : {this.state.yadmNm}</h1>
                     <h1>주소 : {this.state.addr}</h1>
                     <h1>위도 : {this.state.XPosWgs84}</h1>
                     <h1>경도 : {this.state.YPosWgs84}</h1>

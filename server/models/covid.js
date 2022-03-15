@@ -11,10 +11,7 @@ module.exports = (sequelize, Sequelize) => {
 		},
         deathCnt: {
   			type: Sequelize.STRING
-		},
-        gubun: {
-            type: Sequelize.STRING
-      }
+		}
 	});
 
 	return covid

@@ -31,6 +31,7 @@ const hospital_data = (stationName, callback) => {
         const hospital_data = JSON.parse(hospital).response.body.items.item;
         for(var i = 0; i< hospital_data.length;i++){
             params = {
+                yadmNm:hospital_data[i]['yadmNm']['_text'],
                 addr:hospital_data[i]['addr']['_text'],
                 XPosWgs84:hospital_data[i]['XPosWgs84']['_text'],
                 YPosWgs84:hospital_data[i]['YPosWgs84']['_text']
