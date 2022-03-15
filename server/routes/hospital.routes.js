@@ -10,13 +10,13 @@ module.exports = (app) => {
     router.get("/", hospital.findAll);
   
     // Retrieve a single Tutorial with id
-    router.get("/:id", hospital.findOne);
+    router.get("/id", hospital.findOne);
   
     // Update a Tutorial with id
-    router.post("/:id", hospital.update);
+    router.post("/id", hospital.update);
   
     // Delete a Tutorial with id
-    router.delete("/:id", hospital.delete);
+    router.delete("/id", hospital.delete);
   
     // Delete all Tutorial
     router.delete("/", hospital.deleteAll);

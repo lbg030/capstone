@@ -70,19 +70,17 @@ app.post("/values", async (req, res) => {
 });
 
 app.post('/covid', (req, res)=>{ // 입력 날짜 데이터 가져오기
-  covid_data(req.body.location, (error, {covid_data}={})=>{
-      console.log('입력값:'+req.body.location);
+  covid_data(req.body, (error, {covid_data}={})=>{
       if (error){
           return res.send({error})
       }
-      return res.send(hospital_data);
+      return res.send(covid_data);
   })
 } )
 
 app.post('/hospital', (req, res)=>{ // 입력 날짜 데이터 가져오기
   try{
-      hospital_data(req.body.pageNo, (error, {hospital_data}={})=>{
-        console.log(hospital_data[2]['addr']['_text'])
+      hospital_data(req.body, (error, {hospital_data}={})=>{
         return res.json({list : hospital_data});
     })
   } catch(err){
@@ -90,6 +88,12 @@ app.post('/hospital', (req, res)=>{ // 입력 날짜 데이터 가져오기
   }
 
 });
+
+// 라우팅 등록
+const hospitals = require("./routes/hospital.routes");
+
+// 라우팅 분기
+app.use("/api/hospital", hospitals);
 
 app.listen(5000, err => {
   console.log("Listening");

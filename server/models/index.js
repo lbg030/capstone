@@ -19,6 +19,7 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.hospital = require("./hospital.js")(sequelize, Sequelize);
+db.hospitals = require("./hospital.js")(sequelize, Sequelize);
+db.covids = require("./covid.js")(sequelize, Sequelize);
 
 module.exports = db;

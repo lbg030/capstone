@@ -29,14 +29,17 @@ const hospital_data = (stationName, callback) => {
     request(fullurl, (error, {body} )  => {
         const hospital= convert.xml2json(body,{compact:true,spaces:4});
         const hospital_data = JSON.parse(hospital).response.body.items.item;
-        params = {
-            addr:hospital_data[0]['addr']['_text'],
-            XPosWgs84:hospital_data[0]['XPosWgs84']['_text'],
-            YPosWgs84:hospital_data[0]['YPosWgs84']['_text']
-        };
-        models.hospital.create(params);
-        console.log("저장 완료");
-        router.post("/")
+        for(var i = 0; i< hospital_data.length;i++){
+            params = {
+                addr:hospital_data[i]['addr']['_text'],
+                XPosWgs84:hospital_data[i]['XPosWgs84']['_text'],
+                YPosWgs84:hospital_data[i]['YPosWgs84']['_text']
+            };
+            models.hospitals.create(params);
+            console.log(i+1 + "번째 저장 완료");
+            router.post("/")
+        }
+
         callback(undefined, {            // index.js 의  {hospital_data} => 함수로 돌아감
             url:fullurl,
             hospital_data:hospital_data
