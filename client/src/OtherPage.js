@@ -1,12 +1,12 @@
 import React from 'react';
-import axios from "axios";
-
 
 class OtherPage extends React.Component {
     constructor(props) {
     super(props);
 
     this.state = {
+        ID:'',
+        pageNo:'',
         addr:'',	//주소
         XPosWgs84:'',	//위도
         YPosWgs84:'',	//경도
@@ -47,13 +47,15 @@ class OtherPage extends React.Component {
         });
     }
 
+
     render() {
         return (
             <div className="main">
                 <h1>코로나 검사소 병원 정보</h1>
                 <form>
-                    <input placeholder="페이지개수" name="pageNo" onChange={this.onChange}/>
-                    <button onClick={this.search}>Search</button>
+                    {/* <input placeholder="페이지개수" name="pageNo" onChange={this.onChange}/> */}
+                    <button onClick={this.search}>병원데이터 가져오기</button>
+                    <h1>예시 데이터</h1>
                     <h1>주소 : {this.state.addr}</h1>
                     <h1>위도 : {this.state.XPosWgs84}</h1>
                     <h1>경도 : {this.state.YPosWgs84}</h1>
