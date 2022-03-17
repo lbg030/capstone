@@ -18,19 +18,13 @@ import {
 import axios from "axios";
 
 function Dashboard() {
-  // state object로 관리 -> 나중에 객체 수정하기
-  const [state, setState] = useState([]); // 전체 데이터 배열로 저장
+  const [totalData, setTotalData] = useState([]); // 전체 데이터 배열로 저장
   async function ApiCall() {
     try {
       const obj = await axios.get("http://localhost:3001/backend/patient/age");
-      const array = obj.data;
-      console.log(array); // [{...}. {...}, {...}]
-      console.log(array[0]); // {id:1, age:20}
-
-      // state에 array 배열을 담고 싶음..!  => 근데 state가 object, object로 출력됨.. WHY?
-      // console.log(`before state ${state}`);
-      setState((state) => [...state, array]);
-      // console.log(state);
+      setTotalData(obj.data);
+      console.log("====total Data===");
+      console.log(obj.data);
     } catch (err) {
       console.log(err);
     }
@@ -40,15 +34,23 @@ function Dashboard() {
     ApiCall();
   }, []);
 
-  //graphql : 프론트에서 쿼리 요청 -> 백에서 처리 (지금은 사용 X)
-  // filter, reduce -> 배열 만들기
-  // 임시 데이터 for chartist 테스트
-  const tmp = [
-    { id: 1, age: 20 },
-    { id: 2, age: 30 },
-    { id: 3, age: 40 },
-    { id: 4, age: 10 },
-  ];
+  const [totalCount, setTotalCount] = useState(0);
+  const [count, setCount] = useState(0);
+  const [count10, setCount10] = useState(0);
+  const [count20, setCount20] = useState(0);
+  const [count30, setCount30] = useState(0);
+  const [count40, setCount40] = useState(0);
+  const [count50, setCount50] = useState(0);
+
+  useEffect(() => {
+    setTotalCount(totalData.length);
+    setCount(totalData.filter((obj) => obj.age < 10 || obj.age >= 60).length); // 비동기 함수
+    setCount10(totalData.filter((obj) => obj.age >= 10 && obj.age < 20).length); // 비동기 함수
+    setCount20(totalData.filter((obj) => obj.age >= 20 && obj.age < 30).length); // 비동기 함수
+    setCount30(totalData.filter((obj) => obj.age >= 30 && obj.age < 40).length); // 비동기 함수
+    setCount40(totalData.filter((obj) => obj.age >= 40 && obj.age < 50).length); // 비동기 함수
+    setCount50(totalData.filter((obj) => obj.age >= 50 && obj.age < 60).length); // 비동기 함수
+  });
 
   return (
     <>
@@ -65,20 +67,15 @@ function Dashboard() {
                   <ChartistGraph
                     data={{
                       labels: [
+                        "어린이",
                         "10대",
                         "20대",
                         "30대",
                         "40대",
-                        // "12:00AM",
-                        // "3:00PM",
-                        // "6:00PM",
-                        // "9:00PM",
-                        // "12:00PM",
-                        // "3:00AM",
-                        // "6:00AM",
+                        "50대",
                       ],
                       series: [
-                        [tmp[0].id, tmp[1].id, tmp[2].id, tmp[3].id],
+                        [count, count10, count20, count30, count40, count50],
                         // [287, 385, 490, 492, 554, 586, 698, 695],
                         // [67, 152, 143, 240, 287, 335, 435, 437],
                         // [23, 113, 67, 108, 190, 239, 307, 308],
@@ -145,8 +142,23 @@ function Dashboard() {
                 >
                   <ChartistGraph
                     data={{
-                      labels: ["40%", "20%", "40%"],
-                      series: [40, 20, 40],
+                      labels: [
+                        "어린이",
+                        "10대",
+                        "20대",
+                        "30대",
+                        "40대",
+                        "50대",
+                      ],
+                      // series: [40, 20, 40],
+                      series: [
+                        (count / totalCount) * 100,
+                        (count10 / totalCount) * 100,
+                        (count20 / totalCount) * 100,
+                        (count30 / totalCount) * 100,
+                        (count40 / totalCount) * 100,
+                        (count50 / totalCount) * 100,
+                      ],
                     }}
                     type="Pie"
                   />
