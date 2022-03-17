@@ -18,17 +18,35 @@ import {
 import axios from "axios";
 
 function Dashboard() {
-  const [totalData, setTotalData] = useState([]); // 전체 데이터 배열로 저장
+  // const [totalData, setTotalData] = useState([]); // 전체 데이터 배열로 저장
+  const [date, setDate] = useState({
+    startCreateDt: "", // 검색 시작 날짜
+    endCreateDt: "", // 검색 마지막 날짜
+  }); // 전체 데이터 배열로 저장
+
+  const onChange = (e) => {
+    setDate({
+      [e.target.name]: e.target.value, //  input창 입력값을 바로바로 state값 초기화
+    });
+    // console.log(this.state.location);
+  };
+
+  // ApiCall axios로 서버에 요청
   async function ApiCall() {
     try {
-      const obj = await axios.get("http://localhost:3001/backend/patient/age");
-      setTotalData(obj.data);
-      console.log("====total Data===");
-      console.log(obj.data);
+      const params = {
+        // 시작,종료날짜 입력
+        // startCreateDt: startCreateDt,
+        // endCreateDt: state.endCreateDt,
+        startCreateDt: date[startCreateDt],
+        endCreateDt: date[endCreateDt],
+      };
+      const obj = await axios.post("http://localhost:5000/covid", params);
     } catch (err) {
       console.log(err);
     }
   }
+
   // usestate useEffect로 비동기 처리 -> 렌더링 전에 데이터 받기 위해!
   useEffect(() => {
     ApiCall();
@@ -55,6 +73,26 @@ function Dashboard() {
   return (
     <>
       <Container fluid>
+        <div>
+          <form>
+            <input
+              placeholder="시작날짜(20220101형태)"
+              name="startCreateDt"
+              onChange={this.onChange}
+            />
+            <input
+              placeholder="종료날짜(20220101형태)"
+              name="endCreateDt"
+              onChange={this.onChange}
+            />
+            <button onClick={this.search}>확진자 수 데이터 가져오기</button>
+            <h1>예시 데이터</h1>
+            {/* <h1>날짜 : {this.state.stdDay}</h1>
+            <h1>지역 : {this.state.gubun}</h1>
+            <h1>확진자 : {this.state.defCnt}</h1>
+            <h1>사망자 : {this.state.deathCnt}</h1> */}
+          </form>
+        </div>
         <Row>
           <Col md="8">
             <Card>
