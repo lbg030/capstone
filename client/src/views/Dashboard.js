@@ -26,6 +26,7 @@ function Dashboard() {
 
   const onChange = (e) => {
     setDate({
+      ...date, // 이전 date 값 같이 재할당 해야 값 유지 됨
       [e.target.name]: e.target.value, //  input창 입력값을 바로바로 state값 초기화
     });
   };
@@ -33,12 +34,20 @@ function Dashboard() {
   // ApiCall axios로 서버에 요청
   async function ApiCall() {
     try {
-      const params = {
-        // 시작,종료날짜 입력
-        startCreateDt: date[startCreateDt],
-        endCreateDt: date[endCreateDt],
-      };
-      await axios.post("http://localhost:5000/covid", params);
+      // axios 두번째 인자 body 알아보기, 통신 알아보기!!!!!!!!
+      await axios.post("http://localhost:5000/covid", date);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  // DB에 적재된 데이터 가져오기
+  async function covidData() {
+    try {
+      const tmp = await axios.get("http://localhost:5000/dataCovid");
+      // setState 사용법 확인하고 수정
+      setTotalData({ tmp });
+      console.log(tmp);
     } catch (err) {
       console.log(err);
     }
@@ -52,7 +61,7 @@ function Dashboard() {
             <input
               placeholder="시작날짜(20220101형태)"
               name="startCreateDt"
-              onChange={this.onChange}
+              onChange={onChange}
             />
             <input
               placeholder="종료날짜(20220101형태)"
@@ -61,6 +70,8 @@ function Dashboard() {
             />
             <button onClick={ApiCall}>확진자 수 데이터 가져오기</button>
             <h1>예시 데이터</h1>
+            <h1>시작 날짜 : {date.startCreateDt}</h1>
+            <h1>종료 날짜 : {date.endCreateDt}</h1>
             {/* <h1>날짜 : {this.state.stdDay}</h1>
             <h1>지역 : {this.state.gubun}</h1>
             <h1>확진자 : {this.state.defCnt}</h1>

@@ -18,41 +18,45 @@ exports.create = (req, res) => {
     deathCnt: req.body.deathCnt,
   };
 
-  covid.create(covid)
+  covid
+    .create(covid)
     .then((data) => {
       res.send(data);
     })
     .catch((err) => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the covid.",
+        message: err.message || "Some error occurred while creating the covid.",
       });
     });
 };
 
 // Retrieve all covids from the database.
 exports.findAll = (req, res) => {
+  // 해당하는 날짜만 선택
   const stdDay = req.query.stdDay;
   var condition = stdDay ? { stdDay: { [Op.iLike]: `%${stdDay}%` } } : null;
 
-  covid.findAll({ where: condition })
+  covid
+    .findAll({ where: condition })
     .then((data) => {
+      console.log("controller data==========");
+      console.log(data);
       res.send(data);
     })
     .catch((err) => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving covid.",
+        message: err.message || "Some error occurred while retrieving covid.",
       });
     });
 };
 
 // Find a single covid with an id
 exports.findOne = (req, res) => {
-  console.log('라우터 진입');
+  console.log("라우터 진입");
   const id = req.params.id;
 
-  covid.findByPk(id)
+  covid
+    .findByPk(id)
     .then((data) => {
       res.send(data);
     })
@@ -67,9 +71,10 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
   const id = req.params.id;
 
-  covid.update(req.body, {
-    where: { id: id },
-  })
+  covid
+    .update(req.body, {
+      where: { id: id },
+    })
     .then((num) => {
       if (num == 1) {
         res.send({
@@ -78,7 +83,7 @@ exports.update = (req, res) => {
       } else {
         res.send({
           message: `Cannot update covid with id=${id}. Maybe covid was not found or req.body is empty!`,
-        }); 
+        });
       }
     })
     .catch((err) => {
@@ -92,9 +97,10 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
   const id = req.params.id;
 
-  covid.destroy({
-    where: { id: id },
-  })
+  covid
+    .destroy({
+      where: { id: id },
+    })
     .then((num) => {
       if (num == 1) {
         res.send({
@@ -115,10 +121,11 @@ exports.delete = (req, res) => {
 
 // Delete all covid's from the database.
 exports.deleteAll = (req, res) => {
-  covid.destroy({
-    where: {},
-    truncate: false,
-  })
+  covid
+    .destroy({
+      where: {},
+      truncate: false,
+    })
     .then((nums) => {
       res.send({ message: `${nums} covid's were deleted successfully!` });
     })
@@ -132,14 +139,14 @@ exports.deleteAll = (req, res) => {
 
 // Find all published covid's
 exports.findAllPublished = (req, res) => {
-  covid.findAll({ where: { published: true } })
+  covid
+    .findAll({ where: { published: true } })
     .then((data) => {
       res.send(data);
     })
     .catch((err) => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving covid's.",
+        message: err.message || "Some error occurred while retrieving covid's.",
       });
     });
 };
