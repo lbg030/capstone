@@ -35,7 +35,7 @@ function Dashboard() {
   async function ApiCall() {
     try {
       // axios 두번째 인자 body 알아보기, 통신 알아보기!!!!!!!!
-      await axios.post("http://localhost:5000/covid", date);
+      await axios.post("http://localhost:3002/covid", date);
     } catch (err) {
       console.log(err);
     }
@@ -44,7 +44,7 @@ function Dashboard() {
   // DB에 적재된 데이터 가져오기
   async function covidData() {
     try {
-      const tmp = await axios.get("http://localhost:5000/dataCovid");
+      const tmp = await axios.get("http://localhost:3002/dataCovid");
       // setState 사용법 확인하고 수정
       setTotalData({ tmp });
       console.log(tmp);

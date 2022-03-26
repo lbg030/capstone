@@ -16,7 +16,7 @@ spec:
         - name: server
           image: lbg030/multi-server
           ports:
-            - containerPort: 5000
+            - containerPort: 3002
           env:
             - name: PGUSER
               value: postgres
