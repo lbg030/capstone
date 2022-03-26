@@ -32,17 +32,17 @@ function Dashboard() {
   };
 
   // ApiCall axios로 서버에 요청
-  async function ApiCall() {
+  const ApiCall = async () => {
     try {
       // axios 두번째 인자 body 알아보기, 통신 알아보기!!!!!!!!
       await axios.post("http://localhost:5000/covid", date);
     } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   // DB에 적재된 데이터 가져오기
-  async function covidData() {
+  const covidData = async () => {
     try {
       const tmp = await axios.get("http://localhost:5000/dataCovid");
       // setState 사용법 확인하고 수정
@@ -51,7 +51,7 @@ function Dashboard() {
     } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   return (
     <>
