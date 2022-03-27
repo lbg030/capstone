@@ -47,8 +47,8 @@ const covid_data = (body, callback) => {
   const fullurl = url + queryParams;
 
   request(fullurl, (error, { body }) => {
-    console.log("covid_data.js body!!");
-    console.log(body);
+    // console.log("covid_data.js body!!");
+    // console.log(body);
     const covid = convert.xml2json(body, { compact: true, spaces: 4 }); // JSON으로 변경
     const covid_data = JSON.parse(covid).response.body.items.item; // 가공한 데이터
     for (var i = 0; i < covid_data.length; i++) {
@@ -58,9 +58,14 @@ const covid_data = (body, callback) => {
         defCnt: covid_data[i]["defCnt"]["_text"],
         deathCnt: covid_data[i]["deathCnt"]["_text"],
       };
-      models.covids.create(params);
-      console.log(i + 1 + "번째 저장 완료");
-      router.post("/");
+      models.covids.create(params); // DB INSERT!!!!!!!!!!!!!
+
+      // const data = models.covids.findAll(params);
+      // if (data)
+      //   return data;
+
+      // console.log(i + 1 + "번째 저장 완료");
+      // router.post("/");
     }
     callback(undefined, {
       // index.js 의  {covid_data} => 함수로 돌아감

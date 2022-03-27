@@ -32,10 +32,11 @@ function Dashboard() {
   };
 
   // ApiCall axios로 서버에 요청
-  const ApiCall = async () => {
+  const apiCall = async () => {
     try {
       // axios 두번째 인자 body 알아보기, 통신 알아보기!!!!!!!!
-      await axios.post("http://localhost:3002/covid", date);
+      const a = await axios.post("http://localhost:3002/covid", date);
+      console.log(a);
     } catch (err) {
       console.log(err);
     }
@@ -44,7 +45,8 @@ function Dashboard() {
   // DB에 적재된 데이터 가져오기
   const covidData = async () => {
     try {
-      const tmp = await axios.get("http://localhost:3002/dataCovid");
+      const tmp = await axios.post("http://localhost:3002/dataCovid", date);
+      // const tmp = await axios.post("/dataCovid/", date);
       // setState 사용법 확인하고 수정
       setTotalData({ tmp });
       console.log(tmp);
@@ -68,7 +70,7 @@ function Dashboard() {
               name="endCreateDt"
               onChange={onChange}
             />
-            <button onClick={ApiCall}>확진자 수 데이터 가져오기</button>
+            <button onClick={covidData}>확진자 수 데이터 가져오기</button>
             <h1>예시 데이터</h1>
             <h1>시작 날짜 : {date.startCreateDt}</h1>
             <h1>종료 날짜 : {date.endCreateDt}</h1>

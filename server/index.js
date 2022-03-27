@@ -57,16 +57,24 @@ app.get("/api/get", async (req, res) => {
 app.post("/covid", (req, res) => {
   // 입력 날짜 데이터 가져오기
   // api 요청 -> 디비 적재
-  // req 내용 확인!!!!!!!  통신할 때 req 확인!!!!
   console.log("index.js body");
-  console.log(req.body); // {}
+  console.log(req.body); // { startCreateDt : 'YYYYMMDD', endCreateDt : 'YYYYMMDD' }
   console.log("=====");
   covid_data(req.body, (error, { covid_data } = {}) => {
     if (error) {
       return res.send({ error });
     }
+    console.log("covid_data ==============");
+    console.log(covid_data);
+    console.log("============================");
     return res.send(covid_data);
   });
+});
+
+app.post("/dataCovid", (req, res) => {
+  const ctrl = require("./controllers/covid.controller");
+  ctrl.findAll(req.body);
+  console.log("hello");
 });
 
 app.post("/hospital", (req, res) => {
@@ -81,9 +89,9 @@ app.post("/hospital", (req, res) => {
 });
 
 // 라우팅 등록
-const dataCovid = require("./routes/covid.routes");
-// 라우팅 분기
-app.use("/covidData", dataCovid);
+// const dataCovid = require("./routes/covid.routes");
+// // 라우팅 분기
+// app.use("/dataCovid", dataCovid);
 
 // 라우팅 등록
 const hospitals = require("./routes/hospital.routes");
