@@ -36,13 +36,22 @@ driver();
 app.get("/", (req, res) => {
   res.send("Hi");
 });
-
-// get the values
-app.get("/values/all", async (req, res) => {
-  const values = await pgClient.query("SELECT * FROM values");
-
-  res.send(values);
+const { Pool } = require("pg");
+const pgClient = new Pool({
+  user: "postgres",
+  host: "localhost",
+  database: "covid",
+  password: "password",
+  port: 5432,
 });
+
+pgClient.connect();
+
+app.get("/api/get", async (req, res) => {
+  const total = await pgClient.query("select * from hospitals");
+  res.send(total);
+});
+// get the values
 
 // api
 app.post("/covid", (req, res) => {
@@ -81,6 +90,6 @@ const hospitals = require("./routes/hospital.routes");
 // 라우팅 분기
 app.use("/api/hospital", hospitals);
 
-app.listen(5000, (err) => {
+app.listen(3002, (err) => {
   console.log("Listening");
 });
