@@ -28,21 +28,26 @@ function Dashboard() {
   };
 
   // ApiCall axios로 서버에 요청
-  // const apiCall = async () => {
-  //   try {
-  //     // axios 두번째 인자 body 알아보기, 통신 알아보기!!!!!!!!
-  //     const a = await axios.post("http://localhost:3002/covid", date);
-  //     console.log(a);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+  const apiCall = async () => {
+    try {
+      console.log("hello api call");
+      const a = await axios.post("http://localhost:3002/covid", date);
+      // console.log(a);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   // DB에 적재된 데이터 가져오기
   const covidData = async (e) => {
     try {
       e.preventDefault(); // 새로고침 방지 (data 받아와야 돼서 새로고침되면 안됨)
       const tmp = await axios.post("http://localhost:3002/dataCovid", { date });
+      if (!tmp.data[0]) {
+        console.log("empty!!! apiCall!!");
+        await apiCall();
+        console.log("After apiCall");
+      }
       tmp.data.forEach((element) => {
         var index;
         switch (element.gubun) {
