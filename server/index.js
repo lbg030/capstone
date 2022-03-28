@@ -56,25 +56,29 @@ app.get("/api/get", async (req, res) => {
 // api
 app.post("/covid", (req, res) => {
   // 입력 날짜 데이터 가져오기
-  // api 요청 -> 디비 적재
-  console.log("index.js body");
-  console.log(req.body); // { startCreateDt : 'YYYYMMDD', endCreateDt : 'YYYYMMDD' }
-  console.log("=====");
+  // console.log(req.body); // { startCreateDt : 'YYYYMMDD', endCreateDt : 'YYYYMMDD' }
   covid_data(req.body, (error, { covid_data } = {}) => {
     if (error) {
       return res.send({ error });
     }
-    console.log("covid_data ==============");
-    console.log(covid_data);
-    console.log("============================");
+    // console.log("covid_data ==============");
+    // console.log(covid_data);
     return res.send(covid_data);
   });
 });
 
-app.post("/dataCovid", (req, res) => {
-  const ctrl = require("./controllers/covid.controller");
-  ctrl.findAll(req.body);
-  console.log("hello");
+app.post("/dataCovid", async (req, res) => {
+  try {
+    const ctrl = require("./controllers/covid.controller");
+    const data = await ctrl.findAll(req.body);
+
+    JSON.stringify(data);
+    console.log(data);
+    res.status(200).send(data);
+  } catch (err) {
+    console.log(err);
+    res.status(400).send();
+  }
 });
 
 app.post("/hospital", (req, res) => {

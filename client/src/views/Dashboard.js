@@ -18,39 +18,96 @@ import {
 import axios from "axios";
 
 function Dashboard() {
-  const [totalData, setTotalData] = useState([]); // 전체 데이터 배열로 저장
-  const [date, setDate] = useState({
-    startCreateDt: "", // 검색 시작 날짜
-    endCreateDt: "", // 검색 마지막 날짜
-  }); // 전체 데이터 배열로 저장
+  const [totalData, setTotalData] = useState([
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  ]); // 전체 데이터 배열로 저장
+  const [date, setDate] = useState(""); // 입력한(확인할) 날짜
 
   const onChange = (e) => {
-    setDate({
-      ...date, // 이전 date 값 같이 재할당 해야 값 유지 됨
-      [e.target.name]: e.target.value, //  input창 입력값을 바로바로 state값 초기화
-    });
+    setDate(e.target.value);
   };
 
   // ApiCall axios로 서버에 요청
-  const apiCall = async () => {
-    try {
-      // axios 두번째 인자 body 알아보기, 통신 알아보기!!!!!!!!
-      const a = await axios.post("http://localhost:3002/covid", date);
-      console.log(a);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const apiCall = async () => {
+  //   try {
+  //     // axios 두번째 인자 body 알아보기, 통신 알아보기!!!!!!!!
+  //     const a = await axios.post("http://localhost:3002/covid", date);
+  //     console.log(a);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   // DB에 적재된 데이터 가져오기
-  const covidData = async () => {
+  const covidData = async (e) => {
     try {
-      const tmp = await axios.post("http://localhost:3002/dataCovid", date);
-      // const tmp = await axios.post("/dataCovid/", date);
-      // setState 사용법 확인하고 수정
-      setTotalData({ tmp });
-      console.log(tmp);
+      e.preventDefault(); // 새로고침 방지 (data 받아와야 돼서 새로고침되면 안됨)
+      const tmp = await axios.post("http://localhost:3002/dataCovid", { date });
+      tmp.data.forEach((element) => {
+        var index;
+        switch (element.gubun) {
+          case "서울":
+            index = 0;
+            break;
+          case "세종":
+            index = 1;
+            break;
+          case "울산":
+            index = 2;
+            break;
+          case "대전":
+            index = 3;
+            break;
+          case "광주":
+            index = 4;
+            break;
+          case "인천":
+            index = 5;
+            break;
+          case "대구":
+            index = 6;
+            break;
+          case "부산":
+            index = 7;
+            break;
+          case "경기":
+            index = 8;
+            break;
+          case "제주":
+            index = 9;
+            break;
+          case "경남":
+            index = 10;
+            break;
+          case "경북":
+            index = 11;
+            break;
+          case "전남":
+            index = 12;
+            break;
+          case "전북":
+            index = 13;
+            break;
+          case "충남":
+            index = 14;
+            break;
+          case "충북":
+            index = 15;
+            break;
+          case "강원":
+            index = 16;
+            break;
+        }
+        var arr;
+        setTotalData((prev) => {
+          arr = [...prev]; // 복사
+          // arr[index] = element.defCnt;
+          arr[index] = element.deathCnt;
+          return arr;
+        });
+      });
     } catch (err) {
+      console.log("error!");
       console.log(err);
     }
   };
@@ -65,19 +122,9 @@ function Dashboard() {
               name="startCreateDt"
               onChange={onChange}
             />
-            <input
-              placeholder="종료날짜(20220101형태)"
-              name="endCreateDt"
-              onChange={onChange}
-            />
             <button onClick={covidData}>확진자 수 데이터 가져오기</button>
             <h1>예시 데이터</h1>
-            <h1>시작 날짜 : {date.startCreateDt}</h1>
-            <h1>종료 날짜 : {date.endCreateDt}</h1>
-            {/* <h1>날짜 : {this.state.stdDay}</h1>
-            <h1>지역 : {this.state.gubun}</h1>
-            <h1>확진자 : {this.state.defCnt}</h1>
-            <h1>사망자 : {this.state.deathCnt}</h1> */}
+            <h1>시작 날짜 : {date}</h1>
           </form>
         </div>
         <Row>
@@ -92,24 +139,32 @@ function Dashboard() {
                   <ChartistGraph
                     data={{
                       labels: [
-                        "어린이",
-                        "10대",
-                        "20대",
-                        "30대",
-                        "40대",
-                        "50대",
+                        "서울", // 특별시 1개
+                        "세종", // 특별자치시 1개
+                        "울산", // 광역시 6개
+                        "대전",
+                        "광주",
+                        "인천",
+                        "대구",
+                        "부산",
+                        "경기", // 도 9개
+                        "제주",
+                        "경남",
+                        "경북",
+                        "전남",
+                        "전북",
+                        "충남",
+                        "충북",
+                        "강원",
                       ],
                       series: [
-                        // [count, count10, count20, count30, count40, count50],
-                        [287, 385, 490, 492, 554, 586, 698, 695],
-                        [67, 152, 143, 240, 287, 335, 435, 437],
-                        [23, 113, 67, 108, 190, 239, 307, 308],
+                        [...totalData], // 배열!
                       ],
                     }}
                     type="Line"
                     options={{
                       low: 0,
-                      high: 10,
+                      high: 5000,
                       // high: 800,
                       showArea: false,
                       height: "245px",
