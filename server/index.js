@@ -70,10 +70,9 @@ app.post("/covid", (req, res) => {
 app.post("/dataCovid", async (req, res) => {
   try {
     const ctrl = require("./controllers/covid.controller");
+    console.log("req.body====");
+    console.log(req.body);
     const data = await ctrl.findAll(req.body);
-
-    JSON.stringify(data);
-    console.log(data);
     res.status(200).send(data);
   } catch (err) {
     console.log(err);
