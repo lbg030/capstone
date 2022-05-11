@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: server
-          image: hannkim/multi-server
+          image: icj4153/node_server:v2
           ports:
             - containerPort: 3002
           env:

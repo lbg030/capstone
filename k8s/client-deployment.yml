@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: client
-          image: hannkim/client
+          image: icj4153/react_server:v2
           ports:
             - containerPort: 3000

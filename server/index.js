@@ -56,7 +56,7 @@ app.get("/api/get", async (req, res) => {
 // api
 app.post("/covid", (req, res) => {
   // 입력 날짜 데이터 가져오기
-  // console.log(req.body); // { startCreateDt : 'YYYYMMDD', endCreateDt : 'YYYYMMDD' }
+  // console.log("입력된 date" + req.body.date); // { startCreateDt : 'YYYYMMDD', endCreateDt : 'YYYYMMDD' }
   covid_data(req.body, (error, { covid_data } = {}) => {
     if (error) {
       return res.send({ error });
@@ -70,9 +70,10 @@ app.post("/covid", (req, res) => {
 app.post("/dataCovid", async (req, res) => {
   try {
     const ctrl = require("./controllers/covid.controller");
-    console.log("req.body====");
-    console.log(req.body);
     const data = await ctrl.findAll(req.body);
+
+    JSON.stringify(data);
+    console.log(data);
     res.status(200).send(data);
   } catch (err) {
     console.log(err);

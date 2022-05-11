@@ -37,12 +37,12 @@ const covid_data = (body, callback) => {
     "&" +
     encodeURIComponent("startCreateDt") +
     "=" +
-    encodeURIComponent(body.startCreateDt); //dateString
+    encodeURIComponent(body.date); //dateString
   queryParams +=
     "&" +
     encodeURIComponent("endCreateDt") +
     "=" +
-    encodeURIComponent(body.endCreateDt);
+    encodeURIComponent(body.date);
 
   const fullurl = url + queryParams;
 

@@ -31,7 +31,9 @@ function Dashboard() {
   const apiCall = async () => {
     try {
       console.log("hello api call");
-      const a = await axios.post("http://localhost:3002/covid", date);
+      const a = await axios.post("http://localhost:3002/covid", {
+        date: date,
+      });
       // console.log(a);
     } catch (err) {
       console.log(err);
@@ -124,7 +126,7 @@ function Dashboard() {
           <form>
             <input
               placeholder="시작날짜(20220101형태)"
-              name="startCreateDt"
+              name="date"
               onChange={onChange}
             />
             <button onClick={covidData}>확진자 수 데이터 가져오기</button>
