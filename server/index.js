@@ -39,7 +39,7 @@ app.get("/", (req, res) => {
   res.send("Hi");
 });
 
-app.get("/hospital", async (req, res) => {
+app.get("/hospitals", async (req, res) => {
   const total = await pgClient.query("select * from hospitals");
   res.send(total);
 });
