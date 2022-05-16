@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const covid_data = require("./utils/covid_data");
 const hospital_data = require("./utils/hospital_data");
+const ctrl = require("./controllers/covid.controller");
 
 const app = express();
 app.use(cors());
@@ -14,7 +15,7 @@ app.use(bodyParser.json());
 // postgreSQL Sequelize
 // require("./routes/hospital.routes")(app);
 
-const { sequelize, hospital } = require("./models/index.js");
+const { sequelize } = require("./models/index.js");
 const models = require("./models");
 const res = require("express/lib/response");
 const router = require("express").Router();
@@ -57,6 +58,7 @@ app.get("/api/get", async (req, res) => {
 app.post("/covid", (req, res) => {
   // 입력 날짜 데이터 가져오기
   // console.log("입력된 date" + req.body.date); // { startCreateDt : 'YYYYMMDD', endCreateDt : 'YYYYMMDD' }
+  console.log("covid api접근");
   covid_data(req.body, (error, { covid_data } = {}) => {
     if (error) {
       return res.send({ error });
@@ -69,9 +71,7 @@ app.post("/covid", (req, res) => {
 
 app.post("/dataCovid", async (req, res) => {
   try {
-    const ctrl = require("./controllers/covid.controller");
     const data = await ctrl.findAll(req.body);
-
     JSON.stringify(data);
     console.log(data);
     res.status(200).send(data);

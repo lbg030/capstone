@@ -31,10 +31,11 @@ function Dashboard() {
   const apiCall = async () => {
     try {
       console.log("hello api call");
-      const a = await axios.post("http://localhost:3002/covid", {
+      //http://localhost:3002
+      const a = await axios.post("/function/hello", {
         date: date,
       });
-      // console.log(a);
+      console.log(a);
     } catch (err) {
       console.log(err);
     }
@@ -44,7 +45,9 @@ function Dashboard() {
   const covidData = async (e) => {
     try {
       e.preventDefault(); // 새로고침 방지 (data 받아와야 돼서 새로고침되면 안됨)
-      const tmp = await axios.post("http://localhost:3002/dataCovid", { date });
+      const tmp = await axios.post("/function/hello", { date });
+      // http:/api/dataCovid
+      console.log(tmp);
       if (!tmp.data[0]) {
         console.log("empty!!! apiCall!!");
         await apiCall();
