@@ -10,7 +10,7 @@ function OtherPage() {
 
   async function Apicall() {
     try {
-      await Axios.post("http://localhost:3002/hospital").then((returnData) => {
+      await Axios.post("/hospital").then((returnData) => {
         console.log(returnData);
         if (returnData) {
           data.addr = setData(returnData.list[0].addr._text);

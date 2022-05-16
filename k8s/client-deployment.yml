@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: client
-          image: icj4153/react_server:v12
+          image: lbg030/multi-client
           ports:
             - containerPort: 3000

@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: server
-          image: icj4153/node_server:v8
+          image: lbg030/multi-server
           ports:
             - containerPort: 3002
           env:
