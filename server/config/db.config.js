@@ -1,11 +1,11 @@
-const keys = require("../keys");
+// const keys = require("../keys");
 
 module.exports = {
-  HOST: keys.pgHost,
-  USER: keys.pgUser,
-  PASSWORD: keys.pgPassword,
-  database: keys.pgDatabase,
-  port: keys.pgPort,
+  host: process.env.PGHOST,
+  user: process.env.PGUSER,
+  password: process.env.PGPASSWORD,
+  database: process.env.PGDATABASE,
+  port: process.env.PGPORT,
   dialect: "postgres",
   pool: {
     max: 5,

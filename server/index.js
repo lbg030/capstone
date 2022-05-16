@@ -7,6 +7,7 @@ const cors = require("cors");
 const covid_data = require("./utils/covid_data");
 const hospital_data = require("./utils/hospital_data");
 const ctrl = require("./controllers/covid.controller");
+const hos_ctrl = require("./controllers/hospital.controller");
 
 const app = express();
 app.use(cors());
@@ -37,18 +38,8 @@ driver();
 app.get("/", (req, res) => {
   res.send("Hi");
 });
-const { Pool } = require("pg");
-const pgClient = new Pool({
-  user: "postgres",
-  host: "localhost",
-  database: "covid",
-  password: "password",
-  port: 5432,
-});
 
-pgClient.connect();
-
-app.get("/api/get", async (req, res) => {
+app.get("/hospital", async (req, res) => {
   const total = await pgClient.query("select * from hospitals");
   res.send(total);
 });
