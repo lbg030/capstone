@@ -8,17 +8,13 @@ const Maps = () => {
 
   useEffect(() => {
     // we will use nginx to redirect it to the proper URL
-    console.log("Maps 첫번째")
-    axios.get("http://localhost:3002/api/hospitals").then((response) => {
-      console.log(response.data);
-      console.log(place)
+    axios.get("/api/hospitals").then((response) => {
       setPlace(response.data);
-      console.log(response)
     });
   }, []);
 
   const mapscript = () => {
-    // console.log(place);
+
     let container = document.getElementById("map");
     let options = {
       center: new kakao.maps.LatLng(37.29742255286631, 126.8355379155881),
@@ -93,7 +89,6 @@ const Maps = () => {
   useEffect(() => {
     mapscript();
   }, [place]);
-  // console.log(place);
   return (
     <>
       <div id="map" style={{ width: "50vw", height: "50vh" }}></div>

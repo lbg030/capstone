@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: server
-          image: lbg030/multi-server
+          image: lbg030/multi-server:latest
           ports:
             - containerPort: 3002
           env:
