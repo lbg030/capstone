@@ -8,8 +8,12 @@ const Maps = () => {
 
   useEffect(() => {
     // we will use nginx to redirect it to the proper URL
-    axios.get("/api/hospitals").then((response) => {
-      setPlace(response.data.rows);
+    console.log("Maps 첫번째")
+    axios.get("http://localhost:3002/api/hospitals").then((response) => {
+      console.log(response.data);
+      console.log(place)
+      setPlace(response.data);
+      console.log(response)
     });
   }, []);
 
