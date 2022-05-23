@@ -45,7 +45,7 @@ function Dashboard() {
   const covidData = async (e) => {
     try {
       e.preventDefault(); // 새로고침 방지 (data 받아와야 돼서 새로고침되면 안됨)
-      const tmp = await axios.post("/function/hello", { date });
+      const tmp = await axios.post("/api/dataCovid", { date });
       // http:/api/dataCovid
       console.log(tmp);
       if (!tmp.data[0]) {

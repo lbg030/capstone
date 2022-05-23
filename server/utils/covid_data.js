@@ -13,14 +13,14 @@ const res = require("express/lib/response");
 const router = require("express").Router();
 
 const covid_data = (body, callback) => {
-  var today = new Date();
-  var year = today.getFullYear();
-  var month = ("0" + (today.getMonth() + 1)).slice(-2);
-  var day = ("0" + today.getDate()).slice(-2);
+  // var today = new Date();
+  // var year = today.getFullYear();
+  // var month = ("0" + (today.getMonth() + 1)).slice(-2);
+  // var day = ("0" + today.getDate()).slice(-2);
 
-  var dateString = year + month + day;
-  console.log("날짜:" + dateString);
-  console.log("body : " + body);
+  // var dateString = year + month + day;
+  // console.log("날짜:" + dateString);
+  // console.log("body : " + body);
 
   const url =
     "http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19SidoInfStateJson?";
