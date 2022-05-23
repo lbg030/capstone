@@ -39,7 +39,7 @@ app.get("/", (req, res) => {
   res.send("Hi");
 });
 
-app.get("/api/hospitals", async (req, res) => {
+app.get("/all/values", async (req, res) => {
   try {
     const data = await models.hospitals.findAll({attributes: ['YPosWgs84','XPosWgs84','yadmNm']});
     // JSON.stringify(data);
