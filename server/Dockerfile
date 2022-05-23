@@ -1,6 +1,7 @@
 FROM node:14.14.0-alpine
 WORKDIR /app
 COPY ./package.json ./
-RUN npm i
 COPY . .
+RUN npm i
+EXPOSE 3002
 CMD ["npm", "run", "start"]
