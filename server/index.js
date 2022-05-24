@@ -59,9 +59,16 @@ app.get("/", (req, res) => {
   res.send("Hi");
 });
 
-app.get("/hospital", async (req, res) => {
-  const total = await pgClient.query("select * from hospitals");
-  res.send(total);
+app.get("/all/values", async (req, res) => {
+  try {
+    const data = await models.hospitals.findAll({attributes: ['YPosWgs84','XPosWgs84','yadmNm']});
+    // JSON.stringify(data);
+    // console.log(data);
+    res.status(200).send(data);
+  } catch (err) {
+    console.log(err);
+    res.status(400).send();
+  }
 });
 // get the values
 
@@ -74,8 +81,6 @@ app.post("/covid", (req, res) => {
     if (error) {
       return res.send({ error });
     }
-    // console.log("covid_data ==============");
-    // console.log(covid_data);
     return res.send(covid_data);
   });
 });
@@ -95,6 +100,7 @@ app.post("/dataCovid", async (req, res) => {
 app.post("/hospital", (req, res) => {
   // 입력 날짜 데이터 가져오기
   try {
+    console.log("접근 중 ")
     hospital_data(req.body, (error, { hospital_data } = {}) => {
       return res.json({ list: hospital_data });
     });

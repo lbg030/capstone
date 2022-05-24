@@ -8,15 +8,14 @@ const Maps = () => {
 
   useEffect(() => {
     // we will use nginx to redirect it to the proper URL
-    axios.get("/api/hospital").then((response) => {
-      // console.log(response);
-      setPlace(response.data.rows);
-      // console.log(place);
+
+    axios.get("/api/all/values").then((response) => {
+      setPlace(response.data);
     });
   }, []);
 
   const mapscript = () => {
-    // console.log(place);
+
     let container = document.getElementById("map");
     let options = {
       center: new kakao.maps.LatLng(37.29742255286631, 126.8355379155881),
@@ -45,7 +44,7 @@ const Maps = () => {
         message = "geolocation을 사용할수 없어요..";
 
       displayMarker(locPosition, message);
-    }
+    };
 
     function displayMarker(locPosition, message) {
       // 마커를 생성합니다
@@ -68,8 +67,8 @@ const Maps = () => {
 
       // 지도 중심좌표를 접속위치로 변경합니다
       map.setCenter(locPosition);
-    }
-    //지금 안담기는 이유가 처음에 빈 리스트여서 그래서 안담기는거 같은데...
+    };
+
     place.forEach((el) => {
       var infowindow = new kakao.maps.InfoWindow({
         map: map, // 인포윈도우가 표시될 지도
@@ -91,7 +90,6 @@ const Maps = () => {
   useEffect(() => {
     mapscript();
   }, [place]);
-  // console.log(place);
   return (
     <>
       <div id="map" style={{ width: "50vw", height: "50vh" }}></div>
