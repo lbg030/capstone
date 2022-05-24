@@ -8,6 +8,7 @@ const Maps = () => {
 
   useEffect(() => {
     // we will use nginx to redirect it to the proper URL
+
     axios.get("/api/all/values").then((response) => {
       setPlace(response.data);
     });

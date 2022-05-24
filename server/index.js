@@ -32,6 +32,26 @@ const driver = async () => {
   console.log("초기화 완료.");
 };
 driver();
+// const { Pool } = require("pg");
+// const db_config = require("./config/db.config");
+// const pgClient = new Pool({
+//   user: db_config.user,
+//   host: db_config.host,
+//   database: db_config.database,
+//   password: db_config.password,
+//   port: db_config.port,
+// });
+
+// function connectPG() {
+//   try {
+//     pgClient.connect();
+//     console.log("PG connected");
+//   } catch (err) {
+//     console.log("error");
+//   }
+// }
+
+// connectPG();
 
 // 라우팅 등록, 분기로 수정하기!!!!!!!!!!!!!!!!
 //Express route ffefinitions
